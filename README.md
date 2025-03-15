@@ -127,13 +127,3 @@ This project is licensed under the **MIT License** – see the [LICENSE](LICENSE
 ---
 
 **⭐ If you like this project, consider giving it a star on GitHub!**  
-```
-
----
-
-### 🔥 **Tips:**
-- Make sure to replace `akashprajapati-cse` with your GitHub username.  
-- Add a `LICENSE` file to make the license official.  
-- Once you add this `README.md` file, GitHub will automatically display it on the main repository page.  
-
-Let me know if you need more help! 😎
