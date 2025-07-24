@@ -1,74 +1,124 @@
 <!DOCTYPE html>
 <html lang="en">
-  <head>
-    <meta charset="UTF-8" />
-    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Password Manager App</title>
-    <link rel="stylesheet" href="style.css" />
-    <link
-      rel="stylesheet"
-      href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.4.2/css/all.min.css"
-      integrity="sha512-z3gLpd7yknf1YoNbCzqRKc4qyor8gaKU1qmn+CShxbuBusANI9QpRohGBreCFkKxLhei6S9CQXFEbbKuqLg0DA=="
-      crossorigin="anonymous"
-      referrerpolicy="no-referrer"
-    />
-  </head>
-  <body>
-    <nav>
-      <div class="logo">Password Manager App</div>
-      <ul class="navbar">
-        <li class="navbar-menu">Home</li>
-        <li class="navbar-menu">Contact</li>
-      </ul>
+    <!-- Tailwind CSS CDN -->
+    <script src="https://cdn.tailwindcss.com"></script>
+    <!-- Custom CSS file -->
+    <link rel="stylesheet" href="style.css">
+    <!-- Note: Font Awesome is imported within style.css for cleaner HTML -->
+</head>
+<body class="min-h-screen flex flex-col">
+    <!-- Navbar -->
+    <nav class="bg-gray-800 text-white p-4 shadow-md">
+        <div class="container mx-auto flex justify-between items-center">
+            <div class="text-2xl font-bold cursor-pointer">Password Manager App</div>
+            <ul class="flex space-x-6">
+                <li><a href="#" class="hover:text-blue-400 transition-colors duration-200">Home</a></li>
+                <li><a href="#" class="hover:text-blue-400 transition-colors duration-200">Contact</a></li>
+            </ul>
+        </div>
     </nav>
-    <div class="container">
-      <div class="row">
-        <div class="column">
-          <h1>Save Your Password Details</h1>
-          <form action="/save" method="post">
-            <div class="form-label">
-              <label for="website">Website:</label>
-              <input
-                class="form-input"
-                type="text"
-                id="website"
-                name="website"
-                required
-              />
+
+    <!-- Main Content Container -->
+    <div class="container mx-auto p-6 flex-grow">
+        <div class="grid grid-cols-1 lg:grid-cols-3 gap-8">
+            <!-- Save Password Form Card -->
+            <div class="lg:col-span-1 bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Save Your Password Details</h2>
+                <form id="passwordForm" class="space-y-4">
+                    <div>
+                        <label for="website" class="block text-gray-700 text-sm font-medium mb-2">Website:</label>
+                        <input type="text" id="website" name="website" required
+                               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                    </div>
+
+                    <div>
+                        <label for="username" class="block text-gray-700 text-sm font-medium mb-2">Username:</label>
+                        <input type="text" id="username" name="username" required
+                               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                    </div>
+
+                    <div class="relative">
+                        <label for="password" class="block text-gray-700 text-sm font-medium mb-2">Password:</label>
+                        <input type="password" id="password" name="password" required
+                               class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 pr-10">
+                        <span class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer toggle-password top-7">
+                            <i class="fas fa-eye text-gray-500 hover:text-gray-700"></i>
+                        </span>
+                    </div>
+
+                    <button type="submit"
+                            class="w-full bg-green-600 text-white p-3 rounded-lg font-semibold hover:bg-green-700 transition-colors duration-200 flex items-center justify-center space-x-2 shadow-md">
+                        <i class="fas fa-plus"></i>
+                        <span>Save Password</span>
+                    </button>
+                </form>
             </div>
 
-            <div class="form-label">
-              <label for="username">Username:</label>
-              <input
-                class="form-input"
-                type="text"
-                id="username"
-                name="username"
-                required
-              />
+            <!-- Password History Table Card -->
+            <div class="lg:col-span-2 bg-white p-6 rounded-xl shadow-lg">
+                <h2 class="text-2xl font-semibold mb-6 text-gray-800">Your Password History</h2>
+                <div class="overflow-x-auto">
+                    <table class="min-w-full bg-white rounded-lg overflow-hidden shadow-sm">
+                        <thead class="bg-gray-100">
+                            <tr>
+                                <th class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Website</th>
+                                <th class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Username</th>
+                                <th class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Password</th>
+                                <th class="py-3 px-4 text-left text-sm font-medium text-gray-600 uppercase tracking-wider">Actions</th>
+                            </tr>
+                        </thead>
+                        <tbody id="passwordTableBody" class="divide-y divide-gray-200">
+                            <!-- Password data will be populated here by script.js -->
+                        </tbody>
+                    </table>
+                </div>
+                <p id="emptyState" class="text-center text-gray-500 italic mt-8 p-4 border border-dashed border-gray-300 rounded-lg bg-gray-50">No passwords saved yet.</p>
             </div>
-
-            <div class="form-label">
-              <label for="password">Password:</label>
-              <input
-                class="form-input"
-                type="password"
-                id="password"
-                name="password"
-                required
-              />
-            </div>
-
-            <button class="save-btn" type="submit">Save</button>
-          </form>
         </div>
-
-        <div class="column">
-          <h1>Your Password History</h1>
-          <table class="table"></table>
-        </div>
-      </div>
     </div>
+
+    <!-- Edit Modal -->
+    <div id="editModal" class="modal">
+        <div class="modal-content">
+            <span class="close-button">&times;</span>
+            <h2 class="text-2xl font-semibold mb-6 text-gray-800">Edit Password Details</h2>
+            <form id="editForm" class="space-y-4">
+                <input type="hidden" id="editIndex">
+                <div>
+                    <label for="editWebsite" class="block text-gray-700 text-sm font-medium mb-2">Website:</label>
+                    <input type="text" id="editWebsite" required
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                </div>
+                <div>
+                    <label for="editUsername" class="block text-gray-700 text-sm font-medium mb-2">Username:</label>
+                    <input type="text" id="editUsername" required
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200">
+                </div>
+                <div class="relative">
+                    <label for="editPassword" class="block text-gray-700 text-sm font-medium mb-2">Password:</label>
+                    <input type="password" id="editPassword" required
+                           class="w-full p-3 border border-gray-300 rounded-lg focus:ring-2 focus:ring-blue-500 focus:border-transparent transition-all duration-200 pr-10">
+                    <span class="absolute inset-y-0 right-0 pr-3 flex items-center cursor-pointer toggle-password top-7">
+                        <i class="fas fa-eye text-gray-500 hover:text-gray-700"></i>
+                    </span>
+                </div>
+                <button type="submit"
+                        class="w-full bg-blue-600 text-white p-3 rounded-lg font-semibold hover:bg-blue-700 transition-colors duration-200 flex items-center justify-center space-x-2 shadow-md">
+                    <i class="fas fa-check"></i>
+                    <span>Update Password</span>
+                </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- Toast Notification -->
+    <div id="toast" class="toast"></div>
+
+    <!-- Link to your JavaScript file -->
     <script src="script.js"></script>
-  </body>
+</body>
 </html>
